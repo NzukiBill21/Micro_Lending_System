@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Delete Borrower{% endblock %}
+{% block content %}
+<div class="card shadow-lg border-0 rounded-4 p-4" style="background: rgba(255,255,255,0.08); backdrop-filter: blur(8px);">
+  <h3 class="fw-bold text-danger">⚠ Are you sure?</h3>
+  <p class="lead text-white">You are about to delete <b>{{ borrower.name }}</b> with loan KES {{ borrower.loan | int }}.</p>
+  <div class="d-flex justify-content-between">
+    <a href="{{ url_for('borrowers') }}" class="btn btn-secondary">⬅ Cancel</a>
+    <a href="{{ url_for('delete_borrower_confirmed', borrower_id=borrower.id) }}" class="btn btn-danger">🗑 Yes, Delete</a>
+  </div>
+</div>
+{% endblock %}

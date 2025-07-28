@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+{% block content %}
+
+<div class="container my-5">
+  <div class="card shadow-lg border-0 rounded-4 p-4 mx-auto"
+       style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); max-width: 800px; color: white;">
+
+    <h3 class="fw-bold text-info mb-3">⚙ Account & System Settings</h3>
+    <p class="text-muted">Manage preferences, themes, and account security</p>
+
+    <!-- PROFILE SECTION -->
+    <div class="d-flex align-items-center mb-4">
+      {% if current_user.profile_pic %}
+        <img src="{{ url_for('static', filename='uploads/' ~ current_user.profile_pic) }}" alt="Avatar"
+             class="rounded-circle me-3" style="width: 70px; height: 70px; border: 2px solid #0dcaf0;">
+      {% else %}
+        <img src="{{ url_for('static', filename='uploads/default.jpeg') }}" alt="Avatar"
+             class="rounded-circle me-3" style="width: 70px; height: 70px; border: 2px solid #0dcaf0;">
+      {% endif %}
+      <div>
+        <h5 class="mb-0">{{ current_user.username }}</h5>
+        <small class="text-muted">{{ current_user.email }}</small>
+        <div class="mt-2">
+          <!-- Profile Photo Upload Form -->
+          <form action="{{ url_for('upload_profile_pic') }}" method="POST" enctype="multipart/form-data" style="display: inline;">
+            <input type="file" name="profile_pic" id="profilePicInput" accept="image/*" style="display: none;" onchange="this.form.submit()">
+            <button type="button" class="btn btn-sm btn-outline-light" onclick="document.getElementById('profilePicInput').click();">
+              Change Profile Photo
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <hr class="text-white">
+
+    <!-- PREFERENCES SECTION -->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="themeToggle" class="form-label">🌙 Theme Preference</label>
+        <select id="themeToggle" class="form-select bg-transparent text-white border-light">
+          <option>System Default</option>
+          <option>Light</option>
+          <option>Dark</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="notifications" class="form-label">🔔 Notifications</label>
+        <select id="notifications" class="form-select bg-transparent text-white border-light">
+          <option>All</option>
+          <option>Important Only</option>
+          <option>None</option>
+        </select>
+      </div>
+    </div>
+
+    <hr class="text-white">
+
+    <!-- SECURITY SECTION -->
+    <div class="mb-4">
+      <button class="btn btn-outline-warning me-2">🔑 Change Password</button>
+      <button class="btn btn-outline-danger">🗑 Delete Account</button>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <a href="{{ url_for('dashboard') }}" class="btn btn-outline-light">⬅ Back</a>
+      <a href="{{ url_for('logout') }}" class="btn btn-danger">🚪 Logout</a>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

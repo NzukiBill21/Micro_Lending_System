@@ -1,0 +1,186 @@
+/* GLOBAL BACKGROUND – premium fintech vibe */
+body {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+}
+
+/* BIG LOUD TITLE */
+.dashboard-title {
+  font-size: 3rem;
+  font-weight: 900;
+  text-align: center;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #ffce00, #ff8c00);
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: glowText 3s ease-in-out infinite alternate;
+}
+
+@keyframes glowText {
+  0% {
+    text-shadow: 0 0 5px #ffce00, 0 0 10px #ff8c00;
+  }
+  100% {
+    text-shadow: 0 0 20px #ffce00, 0 0 40px #ff8c00;
+  }
+}
+
+/* QUICK STATS CARDS */
+.stat-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border-radius: 15px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.stat-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+}
+
+/* BIG ACTION BUTTONS */
+.btn-lg {
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding: 12px 30px;
+  border-radius: 50px;
+}
+
+/* ✅ CENTER ROTATING PENTAGON */
+.center-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pentagon-3d {
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  animation: spin3d 8s linear infinite;
+}
+
+@keyframes spin3d {
+  0% {
+    transform: rotateY(0deg) rotateX(0deg);
+  }
+  50% {
+    transform: rotateY(180deg) rotateX(25deg);
+  }
+  100% {
+    transform: rotateY(360deg) rotateX(0deg);
+  }
+}
+
+/* ✅ CURSOR FOLLOWER – BIGGER + GLOWING */
+.cursor-pentagon {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.08s linear;
+}
+
+/* SIDEBAR GLASS */
+.sidebar-glass {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 240px;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  box-shadow: 2px 0 15px rgba(0,0,0,0.2);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
+
+.sidebar-logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #ffce00;
+}
+
+.sidebar-menu a {
+  display: block;
+  color: #fff;
+  padding: 12px 15px;
+  margin: 5px 0;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+}
+.sidebar-menu a:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(5px);
+}
+
+/* MAIN CONTENT */
+.main-content {
+  margin-left: 260px;
+  padding: 40px;
+}
+
+/* MODAL GLASS EFFECT */
+.glass-modal {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+/* Table glass effect */
+.table-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  border-radius: 10px;
+}
+
+table.table {
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+table.table thead tr {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+table.table tbody tr {
+  background: rgba(255, 255, 255, 0.03);
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+table.table tbody tr:hover {
+  transform: scale(1.02);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+}

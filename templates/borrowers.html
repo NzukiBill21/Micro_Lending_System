@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Manage Borrowers{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-bold text-info">👥 Borrowers Management</h2>
+  <a href="{{ url_for('dashboard') }}" class="btn btn-outline-light">⬅ Back</a>
+</div>
+
+<div class="card shadow-lg border-0 rounded-4" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(8px);">
+  <div class="card-body p-4">
+    <table class="table table-hover text-center align-middle text-white">
+      <thead style="background: rgba(255, 255, 255, 0.08);">
+        <tr>
+          <th>#</th>
+          <th>Borrower Name</th>
+          <th>Loan Amount (KES)</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for borrower in borrowers %}
+        <tr>
+          <td>{{ borrower.id }}</td>
+          <td class="fw-semibold">{{ borrower.name }}</td>
+ <td class="text-warning fw-bold">
+  {{ "{:,.0f}".format(borrower.loan_amount) if borrower.loan_amount else "0" }}
+</td>
+
+
+          <td>
+            {% if borrower.status == 'Active' %}
+              <span class="badge bg-success px-3 py-2">✔ Active</span>
+            {% elif borrower.status == 'Pending' %}
+              <span class="badge bg-warning text-dark px-3 py-2">⏳ Pending</span>
+            {% else %}
+              <span class="badge bg-danger px-3 py-2">❌ Defaulted</span>
+            {% endif %}
+          </td>
+         <td>
+  <a href="{{ url_for('view_borrower', borrower_id=borrower.id) }}" class="btn btn-sm btn-info">🔍 View</a>
+  <a href="{{ url_for('edit_borrower', borrower_id=borrower.id) }}" class="btn btn-sm btn-warning">✏ Edit</a>
+  <a href="{{ url_for('delete_borrower', borrower_id=borrower.id) }}" class="btn btn-sm btn-danger">🗑 Delete</a>
+</td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Floating Add Borrower Button -->
+<a href="{{ url_for('add_loan') }}" 
+   class="btn btn-primary rounded-circle shadow-lg" 
+   style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; font-size: 1.5rem;">
+  ➕
+</a>
+
+{% endblock %}

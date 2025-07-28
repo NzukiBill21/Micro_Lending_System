@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}View Borrower{% endblock %}
+{% block content %}
+
+<div class="card shadow-lg border-0 rounded-4 p-4"
+     style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(8px); max-width: 500px; margin: auto;">
+  <h3 class="fw-bold text-info text-center">👤 Borrower Details</h3>
+  <ul class="list-group list-group-flush mt-3">
+    <li class="list-group-item bg-transparent text-white">ID: {{ borrower.id }}</li>
+    <li class="list-group-item bg-transparent text-white">Name: {{ borrower.name }}</li>
+    <li class="list-group-item bg-transparent text-warning">Loan: KES {{ borrower.loan | int | format }}</li>
+    <li class="list-group-item bg-transparent text-white">Status: {{ borrower.status }}</li>
+  </ul>
+  
+  <div class="d-flex justify-content-between mt-4">
+    <a href="{{ url_for('borrowers') }}" class="btn btn-secondary">⬅ Back</a>
+    <a href="{{ url_for('edit_borrower', borrower_id=borrower.id) }}" class="btn btn-warning">✏ Edit</a>
+    <a href="{{ url_for('delete_borrower', borrower_id=borrower.id) }}" class="btn btn-danger">🗑 Delete</a>
+  </div>
+</div>
+
+{% endblock %}
+

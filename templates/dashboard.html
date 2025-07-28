@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<!-- Rotating 3D Pentagon -->
+<div class="center-container">
+  <div class="pentagon-3d"></div>
+</div>
+
+<div class="text-center my-5">
+  <!-- Loan logo + loud name -->
+  <h1 class="dashboard-title">💰 MicroLend Pro</h1>
+  <p class="lead">Welcome, {{ user.username }} 👋 – Empowering smart lending</p>
+</div>
+
+<!-- Quick stats -->
+<div class="container text-white my-5">
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card bg-dark shadow rounded-4 p-4 text-center">
+        <h4>Total Borrowers</h4>
+        <p class="fs-2 text-info fw-bold">{{ total_borrowers }}</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card bg-dark shadow rounded-4 p-4 text-center">
+        <h4>Total Loans (KES)</h4>
+        <p class="fs-2 text-success fw-bold">KES {{ "{:,.2f}".format(total_loans) }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Main actions -->
+<div class="text-center mt-5">
+  <a href="{{ url_for('borrowers') }}" class="btn btn-warning btn-lg shadow-lg me-3">📋 Manage Borrowers</a>
+  <a href="{{ url_for('borrowers') }}" class="btn btn-success btn-lg shadow-lg">➕ Add Loan</a>
+</div>
+
+<!-- Cursor follower -->
+<div class="cursor-pentagon" id="cursorPentagon"></div>
+
+<script>
+  // Cursor Pentagon Follow
+  const cursorPentagon = document.getElementById("cursorPentagon");
+  document.addEventListener("mousemove", (e) => {
+    cursorPentagon.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+  });
+</script>
+
+{% endblock %}
