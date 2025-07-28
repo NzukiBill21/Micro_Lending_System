@@ -6,6 +6,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from datetime import datetime
+import secrets
+
 
 from config import Config
 from models import db, User, Borrower
@@ -14,7 +17,14 @@ from forms_auth import LoginForm, RegisterForm
 # ✅ Initialize Flask
 app = Flask(__name__)
 app.config.from_object(Config)
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 
 # ✅ Ensure uploads folder exists
@@ -168,29 +178,41 @@ def delete_borrower(borrower_id):
 def settings():
     return render_template("settings.html")
 
+
 @app.route('/upload_profile_pic', methods=['POST'])
 @login_required
 def upload_profile_pic():
     if 'profile_pic' not in request.files:
         flash('No file part', 'danger')
-        return redirect(request.referrer)
+        return redirect(url_for('settings'))
 
     file = request.files['profile_pic']
     if file.filename == '':
         flash('No selected file', 'warning')
-        return redirect(request.referrer)
+        return redirect(url_for('settings'))
 
-    if file and allowed_file(file.filename):  # ensure allowed_file is defined as explained
+    if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(filepath)
+        unique_filename = f"{current_user.id}_{datetime.now().strftime('%Y%m%d%H%M%S')}_{filename}"
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
 
-        current_user.profile_pic = filename  # Save only filename, not full path
+        # Delete old pic if not default
+        if current_user.profile_pic and current_user.profile_pic != 'default.jpeg':
+            try:
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], current_user.profile_pic))
+            except Exception as e:
+                print(f"Failed to delete old profile pic: {e}")
+
+        # Save new filename in DB
+        current_user.profile_pic = unique_filename
         db.session.commit()
+
         flash('Profile picture updated!', 'success')
     else:
-        flash('Invalid file type. Only JPG, JPEG, PNG allowed.', 'danger')
-    return redirect(request.referrer)
+        flash('Invalid file type. Only images allowed.', 'danger')
+
+    return redirect(url_for('settings'))
+
 
 
 @app.route("/logout")
